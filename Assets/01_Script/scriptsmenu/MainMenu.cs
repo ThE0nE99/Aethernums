@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     public void jugar()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("ScenePlay");
     }
 
 

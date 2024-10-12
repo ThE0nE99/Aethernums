@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     public float velocidadMovimiento = 5.0f;
     public float velocidadRotacion = 200.0f;
 
+    private Transform originalParent;
+
     private Animator anim;
     private float x, y;
 
@@ -19,6 +21,7 @@ public class Player : MonoBehaviour
     {
         puedoSaltar = false;
         anim = GetComponent<Animator>();
+        originalParent = transform.parent;
     }
 
     void FixedUpdate()
@@ -53,5 +56,23 @@ public class Player : MonoBehaviour
     {
         anim.SetBool("tocoSuelo", false);
         anim.SetBool("salte", false);
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        // Si la plataforma es movible
+        if (collision.gameObject.CompareTag("MovingPlatform"))
+        {
+            // Hacer que el player sea hijo de la plataforma
+            transform.parent = collision.transform;
+        }
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("MovingPlatform"))
+        {
+            // Dejar de ser hijo de la plataforma
+            transform.parent = originalParent;
+        }
     }
 }
