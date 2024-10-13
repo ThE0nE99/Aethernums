@@ -166,8 +166,8 @@ public class BossMovimiento : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("pared"))
         {
-            // Cambia la dirección del jefe en un ángulo aleatorio al chocar con la pared
-            grado = Random.Range(90, 270);  // Ajusta para que el ángulo no sea demasiado pequeño
+            
+            grado = Random.Range(90, 270);  
             angulo = Quaternion.Euler(0, transform.eulerAngles.y + grado, 0);
 
             // Aplica la rotación inmediatamente
