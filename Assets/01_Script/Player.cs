@@ -16,9 +16,12 @@ public class Player : MonoBehaviour
     public Rigidbody rb;
     public float fuerzaDeSalto = 8f;
     public bool puedoSaltar;
+    public  GameObject salida1;
     // Start is called before the first frame update
     void Start()
     {
+
+        salida1.GetComponent<BoxCollider>().enabled = false;
         puedoSaltar = false;
         anim = GetComponent<Animator>();
         originalParent = transform.parent;
@@ -65,6 +68,12 @@ public class Player : MonoBehaviour
             // Hacer que el player sea hijo de la plataforma
             transform.parent = collision.transform;
         }
+        else if (collision.gameObject.name == "Park_Streight98" || collision.gameObject.name == "Park_Streight99")
+        {
+                
+             salida1.GetComponent<BoxCollider>().enabled = true;
+         }
+        
     }
 
     void OnCollisionExit(Collision collision)
@@ -75,4 +84,6 @@ public class Player : MonoBehaviour
             transform.parent = originalParent;
         }
     }
+
+    
 }
