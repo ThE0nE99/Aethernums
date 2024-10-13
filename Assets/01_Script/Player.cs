@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
     public float fuerzaDeSalto = 8f;
     public bool puedoSaltar;
 
+    public  GameObject salida1;
+
+
     public float velocidadInicial;
     public float velocidadAgachado;
 
@@ -26,12 +29,13 @@ public class Player : MonoBehaviour
 
     // Variables para disparo
     public GameObject bulletPrefab;   // Prefab del proyectil
-    public Transform firePoint;       // El FirePoint desde donde se disparar·
-    public float bulletSpeed = 20f;   // Velocidad del proyectil
-
+    public Transform firePoint;       // El FirePoint desde donde se disparar√°
+    public float bulletSpeed = 20f;   // Velocidad del proyecti
     // Start is called before the first frame update
     void Start()
     {
+
+        salida1.GetComponent<BoxCollider>().enabled = false;
         puedoSaltar = false;
         anim = GetComponent<Animator>();
         originalParent = transform.parent;
@@ -47,10 +51,10 @@ public class Player : MonoBehaviour
             // Movimiento con las teclas (WASD o flechas)
             transform.Translate(0, 0, y * Time.deltaTime * velocidadMovimiento);
 
-            // RotaciÛn con el ratÛn
+            // Rotaci√≥n con el rat√≥n
             transform.Rotate(0, mouseX * Time.deltaTime * velocidadRotacion, 0);
 
-            // RotaciÛn con las teclas A (izquierda) y D (derecha)
+            // Rotaci√≥n con las teclas A (izquierda) y D (derecha)
             if (x != 0) // Si hay entrada en el eje Horizontal (A o D)
             {
                 transform.Rotate(0, x * Time.deltaTime * velocidadRotacion, 0);
@@ -68,14 +72,14 @@ public class Player : MonoBehaviour
     {
         // Capturamos el movimiento del teclado
         x = Input.GetAxis("Horizontal"); // A y D para rotar y moverse a los lados
-        y = Input.GetAxis("Vertical");   // W y S para mover adelante/atr·s
+        y = Input.GetAxis("Vertical");   // W y S para mover adelante/atr√°s
 
-        // Capturamos el movimiento horizontal del ratÛn
+        // Capturamos el movimiento horizontal del rat√≥n
         mouseX = Input.GetAxis("Mouse X");
 
-        // Control de las animaciones en funciÛn del movimiento en el eje X e Y
+        // Control de las animaciones en funci√≥n del movimiento en el eje X e Y
         anim.SetFloat("VelX", x); // Para moverse a la izquierda/derecha (A o D)
-        anim.SetFloat("VelY", y); // Para moverse adelante/atr·s (W o S)
+        anim.SetFloat("VelY", y); // Para moverse adelante/atr√°s (W o S)
 
         
 
@@ -117,19 +121,19 @@ public class Player : MonoBehaviour
         }
     }
 
-    // MÈtodo para disparar proyectiles
+    // M√©todo para disparar proyectiles
     void Shoot()
     {
-        // Instanciar el proyectil en la posiciÛn y rotaciÛn del FirePoint
+        // Instanciar el proyectil en la posici√≥n y rotaci√≥n del FirePoint
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
         // Obtener el Rigidbody del proyectil para aplicarle fuerza
         Rigidbody rbBullet = bullet.GetComponent<Rigidbody>();
 
-        // Aplicar una fuerza en la direcciÛn en que el FirePoint est· mirando
+        // Aplicar una fuerza en la direcci√≥n en que el FirePoint est√° mirando
         rbBullet.velocity = firePoint.forward * bulletSpeed;
 
-        // Destruir el proyectil despuÈs de 3 segundos
+        // Destruir el proyectil despu√©s de 3 segundos
         Destroy(bullet, 3f);
     }
 
@@ -148,6 +152,14 @@ public class Player : MonoBehaviour
             transform.parent = collision.transform;
         }
 
+        else if (collision.gameObject.name == "Park_Streight98" || collision.gameObject.name == "Park_Streight99")
+        {
+                
+             salida1.GetComponent<BoxCollider>().enabled = true;
+         }
+        
+
+
         // Si colisiona con un objeto que tiene el Tag "reset"
         if (collision.gameObject.CompareTag("reset"))
         {
@@ -155,6 +167,7 @@ public class Player : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
       
+
     }
    
 
@@ -166,6 +179,7 @@ public class Player : MonoBehaviour
             transform.parent = originalParent;
         }
     }
+
 
     public void DejeDeGolpear()
     {
@@ -183,4 +197,5 @@ public class Player : MonoBehaviour
     {
         avanzoSolo = false;
     }
+
 }

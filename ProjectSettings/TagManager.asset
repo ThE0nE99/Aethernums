@@ -5,12 +5,18 @@ TagManager:
   serializedVersion: 2
   tags:
   - MovingPlatform
+
+  - Enemy
+  - pared
+  - damageboos
+
   - reset
+
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 
