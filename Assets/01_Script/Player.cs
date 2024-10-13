@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement; // Asegúrate de agregar esto para reiniciar la escena
+using UnityEngine.SceneManagement; // Para reiniciar la escena
 
 public class Player : MonoBehaviour
 {
@@ -23,6 +23,11 @@ public class Player : MonoBehaviour
     public bool estoyAtacando;
     public bool avanzoSolo;
     public float impulsoDeGolpe = 10f;
+
+    // Variables para disparo
+    public GameObject bulletPrefab;   // Prefab del proyectil
+    public Transform firePoint;       // El FirePoint desde donde se disparará
+    public float bulletSpeed = 20f;   // Velocidad del proyectil
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +77,8 @@ public class Player : MonoBehaviour
         anim.SetFloat("VelX", x); // Para moverse a la izquierda/derecha (A o D)
         anim.SetFloat("VelY", y); // Para moverse adelante/atrás (W o S)
 
+        
+
         if (Input.GetMouseButtonDown(0) && puedoSaltar && !estoyAtacando)
         {
             anim.SetTrigger("golpeo");
@@ -82,6 +89,7 @@ public class Player : MonoBehaviour
         {
             if (!estoyAtacando)
             {
+                
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     anim.SetBool("salte", true);
@@ -99,6 +107,7 @@ public class Player : MonoBehaviour
                     velocidadMovimiento = velocidadInicial;
                 }
             }
+            
 
             anim.SetBool("tocoSuelo", true);
         }
@@ -106,6 +115,22 @@ public class Player : MonoBehaviour
         {
             EstoyCayendo();
         }
+    }
+
+    // Método para disparar proyectiles
+    void Shoot()
+    {
+        // Instanciar el proyectil en la posición y rotación del FirePoint
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+
+        // Obtener el Rigidbody del proyectil para aplicarle fuerza
+        Rigidbody rbBullet = bullet.GetComponent<Rigidbody>();
+
+        // Aplicar una fuerza en la dirección en que el FirePoint está mirando
+        rbBullet.velocity = firePoint.forward * bulletSpeed;
+
+        // Destruir el proyectil después de 3 segundos
+        Destroy(bullet, 3f);
     }
 
     public void EstoyCayendo()
@@ -129,7 +154,9 @@ public class Player : MonoBehaviour
             // Reiniciar la escena actual
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+      
     }
+   
 
     void OnCollisionExit(Collision collision)
     {
@@ -143,11 +170,13 @@ public class Player : MonoBehaviour
     public void DejeDeGolpear()
     {
         estoyAtacando = false;
+        
     }
 
     public void AnanzoSolo()
     {
         avanzoSolo = true;
+        Shoot();
     }
 
     public void DejoDeAvanzar()

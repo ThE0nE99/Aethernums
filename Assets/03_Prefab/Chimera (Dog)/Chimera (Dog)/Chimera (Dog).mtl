@@ -1,0 +1,24 @@
+# Blender3D MTL File: Chimera (Dog).blend
+# Material Count: 2
+newmtl RefRep.217_Chimera_(Dog)_Body_Te
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.558431 0.558431 0.558431
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Chimera (Dog) Body Texture.png
+
+
+newmtl RefRep.215_Chimera_(Dog)_Face_Te
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.558431 0.558431 0.558431
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Chimera (Dog) Face Texture.png
+
+
