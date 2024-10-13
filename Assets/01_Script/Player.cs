@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 
     private Transform originalParent;
 
-    private Animator anim;
+    public Animator anim;
     private float x, y;
     public float life = 3f;
     public Rigidbody rb;
